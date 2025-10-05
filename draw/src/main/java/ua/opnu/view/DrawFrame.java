@@ -13,7 +13,7 @@ import javax.swing.border.LineBorder;
 public class DrawFrame extends JFrame {
 
     // Область для малювання фігур
-    private PaintSurface surface;
+    private final PaintSurface surface;
 
     // У конструкторі створюємо GUI
     public DrawFrame(String title) {
@@ -61,7 +61,7 @@ public class DrawFrame extends JFrame {
         JPanel buttonPanel = new JPanel(true);
 
         // Повідомляємо панелі, що елементи всередині нього
-        // повинні йти один за одним зліва направо з вирівнюванням по центру
+        // повинні йти один за одним зліва направо з вирівнюванням зліва
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         // Колір фону панелі
         buttonPanel.setBackground(Color.CYAN);
@@ -71,6 +71,41 @@ public class DrawFrame extends JFrame {
         // *** Додаємо кнопки на панель ***
 
         // 1. Кнопка для прямокутника
+        BigTextButton rect = getBigTextButton();
+        // додаємо першу кнопку на верхню панель
+        buttonPanel.add(rect);
+
+        // 2. Кнопка для закругленого прямокутника
+        BigTextButton rounded_rect = new BigTextButton("Rounded rect.");
+        rounded_rect.addActionListener(e -> {
+            // Кажемо області малювання, що тепер потрібно
+            // малювати закруглені прямокутники
+            surface.setShapeType(DrawShape.SHAPE_ROUNDED_RECT);
+        });
+        // Додаємо другу кнопку на верхню панель
+        buttonPanel.add(rounded_rect);
+
+        BigTextButton ellipse = new BigTextButton("Ellipse");
+        ellipse.addActionListener(e -> surface.setShapeType(DrawShape.SHAPE_ELLIPSE));
+        buttonPanel.add(ellipse);
+
+        BigTextButton heart = new BigTextButton("Heart");
+        heart.addActionListener(e -> surface.setShapeType(DrawShape.SHAPE_HEART));
+        buttonPanel.add(heart);
+
+        BigTextButton smile = new BigTextButton("Smile");
+        smile.addActionListener(e -> surface.setShapeType(DrawShape.SHAPE_SMILE));
+        buttonPanel.add(smile);
+
+
+        BigTextButton clear = new BigTextButton("Clear");
+        clear.addActionListener(e -> surface.clearShapes());
+        buttonPanel.add(clear);
+
+        return buttonPanel;
+    }
+
+    private BigTextButton getBigTextButton() {
         BigTextButton rect = new BigTextButton("Rectangle");
 
         // Це т.зв. слухач (Listener). Слухач - об'єкт деякого
@@ -86,23 +121,8 @@ public class DrawFrame extends JFrame {
             // щоб він знав, що тепер потрібно малювати прямокутники
             surface.setShapeType(DrawShape.SHAPE_RECTANGLE);
         });
-        // додаємо першу кнопку на верхню панель
-        buttonPanel.add(rect);
-
-        // 2. Кнопка для закругленого прямокутника
-        BigTextButton rounded_rect = new BigTextButton("Rounded rect.");
-        rounded_rect.addActionListener(e -> {
-            // Кажемо області малювання, що тепер потрібно
-            // малювати закруглені прямокутники
-            surface.setShapeType(DrawShape.SHAPE_ROUNDED_RECT);
-        });
-        // Додаємо другу кнопку на верхню панель
-        buttonPanel.add(rounded_rect);
-
-        // TODO: додати кнопку для еліпса за аналогією з іншими кнопками
-        // TODO: для додаткових балів додати кнопку "Clear" для очищення всіх фігур
-
-        return buttonPanel;
+        return rect;
     }
-}
 
+
+}
