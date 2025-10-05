@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class PaintSurface extends JComponent {
 
-    // Список фігур, які намальовані на поверхні
+    // Список фигур, які намальовані на поверхні
     private final List<DrawShape> shapes = new ArrayList<>();
 
     // Тип поточної фігури
@@ -179,5 +179,9 @@ public class PaintSurface extends JComponent {
             Shape line = new Line2D.Float(0, i, getSize().width, i);
             g2.draw(line);
         }
+    }
+    public void clearShapes() {
+        shapes.clear(); // Очищуємо список фігур
+        repaint(); // Оновлюємо поверхню
     }
 }
